@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using TaskFlow.API.Data;
+DotNetEnv.Env.Load();
 
 var builder = WebApplication.CreateBuilder(args);
 

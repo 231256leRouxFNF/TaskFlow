@@ -129,3 +129,5 @@ C:\Users\flr21\Desktop\TaskFlow\TaskFlow\TaskFlow.API\obj\Debug\net9.0\refint\Ta
 C:\Users\flr21\Desktop\TaskFlow\TaskFlow\TaskFlow.API\obj\Debug\net9.0\TaskFlow.API.pdb
 C:\Users\flr21\Desktop\TaskFlow\TaskFlow\TaskFlow.API\obj\Debug\net9.0\TaskFlow.API.genruntimeconfig.cache
 C:\Users\flr21\Desktop\TaskFlow\TaskFlow\TaskFlow.API\obj\Debug\net9.0\ref\TaskFlow.API.dll
+C:\Users\flr21\Desktop\TaskFlow\TaskFlow\TaskFlow.API\bin\Debug\net9.0\DotNetEnv.dll
+C:\Users\flr21\Desktop\TaskFlow\TaskFlow\TaskFlow.API\bin\Debug\net9.0\Superpower.dll
