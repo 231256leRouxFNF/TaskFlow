@@ -1,0 +1,29 @@
+# Environment vars
+.env
+
+# Build folders
+bin/
+obj/
+
+# Visual Studio
+.vs/
+
+# VS Code
+.vscode/
+
+# User Files
+*.suo
+*.user
+
+# Logs
+*.log
+
+#NuGet
+packages/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Rider
+.idea/
