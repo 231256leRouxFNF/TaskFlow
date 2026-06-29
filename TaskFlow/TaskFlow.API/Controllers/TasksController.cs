@@ -59,10 +59,24 @@ public class TasksController : ControllerBase
 
     // GET: api/tasks
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<TaskDto>>> GetTasks()
+    public async Task<ActionResult<IEnumerable<TaskDto>>> GetTasks(
+        TaskItemStatus? status,
+        Priority? priority
+    )
     {
-        var tasks = await _context.Tasks
-            .AsNoTracking()
+        var querty = _context.Tasks.AsNoTracking();
+
+        if (status.HasValue)
+        {
+            querty = querty.Where(t => t.Status == status.Value);
+        }
+        if (priority.HasValue)
+        {
+            querty = querty.Where(t => t.Priority == priority.Value);
+        }
+
+        
+        var tasks = await querty
             .Select(t => MapToDto(t))
             .ToListAsync();
 
