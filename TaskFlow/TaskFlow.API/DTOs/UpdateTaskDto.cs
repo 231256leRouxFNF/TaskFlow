@@ -1,4 +1,5 @@
 namespace TaskFlow.API.DTOs;
+using TaskFlow.API.Models;
 
 public class UpdateTaskDto
 {
@@ -6,6 +7,10 @@ public class UpdateTaskDto
 
     public string Description { get; set; } = "";
 
-    public bool IsCompleted { get; set; }
+    // public bool IsCompleted { get; set; }
+
+    public DateTime? DueDate { get; set; }
+
+    public Priority Priority { get; set; }
         
 }

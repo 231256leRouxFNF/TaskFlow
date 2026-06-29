@@ -15,12 +15,13 @@ namespace TaskFlow.API.Models
 
         public bool IsCompleted { get; set; }
 
+        public TaskItemStatus Status { get; set; } = TaskItemStatus.Todo;
+
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
         public DateTime? DueDate { get; set; } = DateTime.UtcNow;
 
-        [MaxLength(20)]
-        public string Priority { get; set; } = "Medium";
+        public Priority Priority { get; set; } = Priority.Medium;
 
     }
 }

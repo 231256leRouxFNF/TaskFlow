@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace TaskFlow.API.Models
 {
-    public enum TaskStatus
+    public enum TaskItemStatus
     {
         Todo,
         InProgress,
