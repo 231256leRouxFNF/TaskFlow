@@ -3,7 +3,9 @@
 
 # Build folders
 bin/
+**/bin/
 obj/
+**/obj/
 
 # Visual Studio
 .vs/
@@ -28,3 +30,5 @@ Thumbs.db
 # Rider
 .idea/
 
+appsettings.json
+appsettings.Development.json
