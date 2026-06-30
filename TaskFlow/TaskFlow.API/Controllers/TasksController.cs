@@ -11,16 +11,21 @@ namespace TaskFlow.API.Controllers;
 public class TasksController : ControllerBase
 {
     private readonly ApplicationDbContext _context;
+    private readonly ILogger<TasksController> _logger;
 
-    public TasksController(ApplicationDbContext context)
+    public TasksController(ApplicationDbContext context, ILogger<TasksController> logger)
     {
         _context = context;
+        _logger = logger;
     }
 
-    // POST: api/tasks
+        // POST: api/tasks
     [HttpPost]
     public async Task<ActionResult<TaskDto>> CreateTask(CreateTaskDto dto)
     {
+
+        _logger.LogInformation("Creating a new task with title: {Title}", dto.Title);
+
         var task = new TaskItem
         {
             Title = dto.Title,
@@ -44,6 +49,8 @@ public class TasksController : ControllerBase
     [HttpGet("{id}")]
     public async Task<ActionResult<TaskDto>> GetTask(int id)
     {
+        _logger.LogInformation("Fetching task with ID: {Id}", id);
+
         // Using AsNoTracking since we are only reading the data
         var task = await _context.Tasks
             .AsNoTracking()
@@ -61,36 +68,90 @@ public class TasksController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<IEnumerable<TaskDto>>> GetTasks(
         TaskItemStatus? status,
-        Priority? priority
-    )
+        Priority? priority,
+        [FromQuery] string? sortBy,
+        [FromQuery] bool descending = false,
+        [FromQuery] string? search = null,
+        [FromQuery] int page = 1,
+        [FromQuery] int pageSize = 10)
+
     {
-        var querty = _context.Tasks.AsNoTracking();
+
+        _logger.LogInformation("Fetching tasks with filters - Status: {Status}, Priority: {Priority}, SortBy: {SortBy}, Descending: {Descending}, Search: {Search}, Page: {Page}, PageSize: {PageSize}",
+            status, priority, sortBy, descending, search, page, pageSize);
+
+        var query = _context.Tasks.AsNoTracking();
 
         if (status.HasValue)
         {
-            querty = querty.Where(t => t.Status == status.Value);
+            query = query.Where(t => t.Status == status.Value);
         }
         if (priority.HasValue)
         {
-            querty = querty.Where(t => t.Priority == priority.Value);
+            query = query.Where(t => t.Priority == priority.Value);
         }
 
-        
-        var tasks = await querty
+        if (!string.IsNullOrWhiteSpace(search))
+        {
+            
+            query = query.Where(t =>
+            t.Title.Contains(search) ||
+            (t.Description != null && t.Description.Contains(search)));
+        }
+
+        query = (sortBy?.ToLower()) switch
+        {
+            "duedate" => descending
+                ? query.OrderByDescending(t => t.DueDate)
+                : query.OrderBy(t => t.DueDate),
+
+            "createdat" => descending
+                ? query.OrderByDescending(t => t.CreatedAt)
+                : query.OrderBy(t => t.CreatedAt),
+
+            "priority" => descending
+                ? query.OrderByDescending(t => t.Priority)
+                : query.OrderBy(t => t.Priority),
+
+            _ => query.OrderBy(t => t.Id)
+        };
+
+        page = Math.Max(page, 1);
+        pageSize = Math.Clamp(pageSize, 1, 100);
+
+        var totalCount = await query.CountAsync();
+        var totalPages = (int)Math.Ceiling(totalCount / (double)pageSize);
+
+        var skip = (page - 1) * pageSize;
+
+        var tasks = await query
+            .Skip(skip)
+            .Take(pageSize)
             .Select(t => MapToDto(t))
             .ToListAsync();
 
-        return Ok(tasks);
+        return Ok(new
+        {
+            page,
+            pageSize,
+            totalCount,
+            totalPages,
+            items = tasks
+        });
     }
 
-    // PUT: api/tasks/5
+    // PUT: api/tasks/
     [HttpPut("{id}")]
     public async Task<IActionResult> UpdateTask(int id, UpdateTaskDto dto)
     {
+
+        _logger.LogInformation("Updating task with ID: {Id}", id);
+
         var task = await _context.Tasks.FindAsync(id);
 
         if (task == null)
         {
+            _logger.LogWarning("Task with ID: {Id} not found for update", id);
             return NotFound();
         }
 
@@ -98,7 +159,7 @@ public class TasksController : ControllerBase
         task.Description = dto.Description;
         task.DueDate = dto.DueDate;
         task.Priority = dto.Priority;
-        task.Status = TaskItemStatus.Todo; 
+        task.Status = dto.Status;
 
         await _context.SaveChangesAsync();
 
@@ -109,10 +170,14 @@ public class TasksController : ControllerBase
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteTask(int id)
     {
+
+        _logger.LogInformation("Deleting task with ID: {Id}", id);
+
         var task = await _context.Tasks.FindAsync(id);
 
         if (task == null)
         {
+            _logger.LogWarning("Task with ID: {Id} not found for deletion", id);
             return NotFound();
         }
 
