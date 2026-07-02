@@ -1,8 +1,11 @@
-import { useState } from 'react'
-
+import { AppLayout } from "@/components/layout/AppLayout";
 
 function App() {
-  return <h1>Hello</h1>;
+  return (
+    <AppLayout>
+      <h1 className="text-3xl font-bold">Dashboard</h1>
+    </AppLayout>
+  );
 }
 
 export default App;
