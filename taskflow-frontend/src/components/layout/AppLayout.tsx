@@ -1,23 +1,60 @@
-import type { ReactNode } from "react";
-
 import {
   SidebarProvider,
+  Sidebar,
+  SidebarHeader,
+  SidebarContent,
+  SidebarFooter,
   SidebarInset,
-} from "@/components/ui/sidebar";
+  SidebarMenuButton,
+} from "./Sidebar";
 
-import { Sidebar } from "./Sidebar";
+import {
+  LayoutDashboard,
+  CheckSquare,
+  Settings,
+  User,
+} from "lucide-react";
 
-type Props = {
-  children: ReactNode;
+type AppLayoutProps = {
+  children: React.ReactNode;
 };
 
-export function AppLayout({ children }: Props) {
+export default function AppLayout({ children }: AppLayoutProps) {
   return (
     <SidebarProvider>
-      <Sidebar />
+      <Sidebar>
+        <SidebarHeader>
+          <h1 className="text-lg font-bold">TaskFlow</h1>
+        </SidebarHeader>
+
+        <SidebarContent>
+          <SidebarMenuButton
+            icon={LayoutDashboard}
+            label="Dashboard"
+            isActive
+          />
+
+          <SidebarMenuButton
+            icon={CheckSquare}
+            label="Tasks"
+          />
+
+          <SidebarMenuButton
+            icon={Settings}
+            label="Settings"
+          />
+        </SidebarContent>
+
+        <SidebarFooter>
+          <SidebarMenuButton
+            icon={User}
+            label="Francois"
+          />
+        </SidebarFooter>
+      </Sidebar>
 
       <SidebarInset>
-        <main className="p-6">{children}</main>
+        {children}
       </SidebarInset>
     </SidebarProvider>
   );
