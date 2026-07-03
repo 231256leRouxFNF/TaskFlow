@@ -8,17 +8,22 @@ import {
   SidebarTrigger, 
   SidebarInset 
 } from "../ui/sidebar";
-import { LayoutDashboard, CheckSquare, Settings, LogOut } from "lucide-react";
+import { LayoutDashboard, CheckSquare, Mail, User, Zap } from "lucide-react";
 
-export default function WorkspaceLayout({ children }: { children: React.ReactNode }) {
+export default function WorkspaceLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <SidebarProvider>
+
       {/* Sidebar Navigation Panel */}
       <Sidebar className="border-r border-zinc-800 bg-[#0F1117]">
         <SidebarHeader className="border-b border-zinc-800 px-5 py-5">
             <div className="flex items-center gap-3">
                 <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-indigo-600">
-                ⚡
+                    <Zap className="h-4 w-4 text-white"/>
                 </div>
 
                 <span className="text-lg font-semibold text-white">
@@ -27,28 +32,55 @@ export default function WorkspaceLayout({ children }: { children: React.ReactNod
             </div>
         </SidebarHeader>
         
-        <SidebarContent>
-          <SidebarMenuButton icon={LayoutDashboard} label="Dashboard" isActive={true} />
-          <SidebarMenuButton icon={CheckSquare} label="My Tasks" />
-        </SidebarContent>
+        <SidebarContent className="px-3 py-5 space-y-2">
+          <SidebarMenuButton isActive>
+            <LayoutDashboard className="h-4 w-4" />
+            <span>Dashboard</span>
+          </SidebarMenuButton>
+          <SidebarMenuButton>
+            <CheckSquare className="h-4 w-4" />
+            <span>My Tasks</span>
+          </SidebarMenuButton>
+          <SidebarMenuButton>
+            <CheckSquare className="h-4 w-4" />
+            <span>My Tasks</span>
+          </SidebarMenuButton>
+          <SidebarMenuButton>
+            <CheckSquare className="h-4 w-4" />
+            <span>My Tasks</span>
+          </SidebarMenuButton>
+          </SidebarContent>
 
         <SidebarFooter>
-          <SidebarMenuButton icon={Settings} label="Settings" />
-          <SidebarMenuButton icon={LogOut} label="Logout" />
+          <SidebarMenuButton>
+            <User className="h-4 w-4" />
+            <span>User</span>
+          </SidebarMenuButton>
+
+          <SidebarMenuButton>
+            <Mail className="h-4 w-4" />
+            <span>Email</span>
+          </SidebarMenuButton>
         </SidebarFooter>
       </Sidebar>
 
-      {/* Primary Body Content Interface */}
-      <SidebarInset>
+      {/* Main Content Area */}
+    <SidebarInset>
+    
+
         <header className="flex h-12 items-center gap-4 border-b pb-3 mb-4">
           <SidebarTrigger />
-          <h2 className="text-lg font-semibold tracking-tight">Active Workspace</h2>
+          <h2 className="text-lg font-semibold tracking-tight">
+            Active Workspace
+          </h2>
         </header>
-        
-        <div className="flex-1 bg-muted/30 rounded-xl border border-dashed p-6">
+
+        <div className="min-h-screen bg-[#090B12] p-8">
           {children}
         </div>
+
       </SidebarInset>
+
     </SidebarProvider>
   );
 }

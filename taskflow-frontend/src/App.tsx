@@ -1,9 +1,14 @@
-import AppLayout from "./components/layout/AppLayout";
+import WorkspaceLayout from "./components/layout/Sidebar";
 
-export default function App() {
+function App() {
   return (
-    <AppLayout>
-      <h1>Hello Dashboard</h1>
-    </AppLayout>
+    <WorkspaceLayout>
+      <div className="text-white">
+        <h1 className="text-3xl font-bold">Dashboard</h1>
+        <p>TaskFlow is rendering 🎉</p>
+      </div>
+    </WorkspaceLayout>
   );
 }
+
+export default App;
