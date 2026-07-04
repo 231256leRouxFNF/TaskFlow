@@ -5,6 +5,8 @@ import "./index.css";
 
 import { TooltipProvider } from "@/components/ui/tooltip";
 
+document.documentElement.classList.add("dark");
+
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <TooltipProvider>
