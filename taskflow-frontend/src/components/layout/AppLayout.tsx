@@ -1,7 +1,3 @@
-"use client";
-
-import * as React from "react";
-import { LayoutDashboard, CheckSquare, Settings, LogOut, Bell } from "lucide-react";
 import { 
   SidebarProvider, 
   Sidebar, 
@@ -9,86 +5,108 @@ import {
   SidebarContent, 
   SidebarFooter, 
   SidebarMenuButton, 
-  SidebarTrigger, 
   SidebarInset 
-} from "./Sidebar";
+} from "../ui/sidebar";
+import { LayoutDashboard, CheckSquare, Mail, User, Zap } from "lucide-react";
+import Header from "./Header";
 
-interface AppLayoutProps {
+const projects = [
+  { name: "Core API", color: "bg-indigo-500", count: 6 },
+  { name: "Auth Service", color: "bg-rose-500", count: 2 },
+  { name: "Frontend", color: "bg-amber-400", count: 2 },
+  { name: "DevOps", color: "bg-emerald-500", count: 2 },
+];
+
+export default function WorkspaceLayout({
+  children,
+}: {
   children: React.ReactNode;
-}
-
-export default function AppLayout({ children }: AppLayoutProps) {
-  // Simple state tracking for active menu selection
-  const [activeTab, setActiveTab] = React.useState("dashboard");
-
+}) {
   return (
     <SidebarProvider>
-      {/* 1. Left Nav Sidebar Section */}
-      <Sidebar>
-        <SidebarHeader>
-          <span className="text-sm font-bold bg-gradient-to-r from-primary to-indigo-500 bg-clip-text text-transparent px-1">
-            TaskFlow App
-          </span>
-        </SidebarHeader>
-        
-        <SidebarContent>
-          <SidebarMenuButton 
-            icon={LayoutDashboard} 
-            label="Dashboard" 
-            isActive={activeTab === "dashboard"} 
-            onClick={() => setActiveTab("dashboard")} 
-          />
-          <SidebarMenuButton 
-            icon={CheckSquare} 
-            label="My Tasks" 
-            isActive={activeTab === "tasks"} 
-            onClick={() => setActiveTab("tasks")} 
-          />
-        </SidebarContent>
+          {/* Sidebar Navigation Panel */}
+          <Sidebar className="border-r border-zinc-800 py-">
+            <SidebarHeader className="border-b border-zinc-800 px-5 py-5">
+                <div className="flex items-center gap-3">
+                    <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-indigo-600">
+                        <Zap className="h-4 w-4 text-white"/>
+                    </div>
 
-        <SidebarFooter>
-          <SidebarMenuButton 
-            icon={Settings} 
-            label="Settings" 
-            isActive={activeTab === "settings"} 
-            onClick={() => setActiveTab("settings")} 
-          />
-          <SidebarMenuButton 
-            icon={LogOut} 
-            label="Logout" 
-            onClick={() => console.log("Logging out...")} 
-            className="text-destructive hover:bg-destructive/10 hover:text-destructive"
-          />
-        </SidebarFooter>
-      </Sidebar>
+                    <span className="text-lg font-semibold ">
+                    TaskFlow
+                    </span>
+                </div>
+            </SidebarHeader>
+            
+            <SidebarContent className="px-3 py-5 space-y-2">
+                <SidebarMenuButton isActive>
+                  <LayoutDashboard className="h-4 w-4 " />
+                  <span >Dashboard</span>
+                </SidebarMenuButton>
+                <SidebarMenuButton>
+                  <CheckSquare className="h-4 w-4 text-white" />
+                  <span >Tasks</span>
+                </SidebarMenuButton>
+                <SidebarMenuButton>
+                  <CheckSquare className="h-4 w-4 text-white" />
+                  <span >API Explorer</span>
+                </SidebarMenuButton>
+                <SidebarMenuButton>
+                  <CheckSquare className="h-4 w-4 text-white" />
+                  <span >Settings</span>
+                </SidebarMenuButton>
 
-      {/* 2. Main Content Display Window */}
-      <SidebarInset>
-        {/* Persistent Workspace Utility Header */}
-        <header className="flex h-14 items-center justify-between border-b pb-3 mb-4">
-          <div className="flex items-center gap-4">
-            <SidebarTrigger />
-            <h2 className="text-lg font-semibold tracking-tight capitalize">
-              {activeTab} Workspace
-            </h2>
-          </div>
-          
-          {/* Header Action Items */}
-          <div className="flex items-center gap-2">
-            <button className="rounded-md p-2 hover:bg-accent text-muted-foreground transition-colors">
-              <Bell className="h-4 w-4" />
-            </button>
-            <div className="h-7 w-7 rounded-full bg-primary/20 border border-primary flex items-center justify-center text-xs font-semibold text-primary">
-              U
-            </div>
-          </div>
-        </header>
-        
-        {/* Slot rendering view markup passed from page roots */}
-        <div className="flex-1 bg-muted/20 rounded-xl border border-dashed p-4 md:p-6">
-          {children}
-        </div>
-      </SidebarInset>
+                <div className="mt-8">
+                    <h3 className="mb-4 px-3 text-xs font-semibold tracking-[0.25em] text-zinc-500">
+                      PROJECTS
+                    </h3>
+
+                    <div className="space-y-1">
+                      {projects.map((project) => (
+                        <button
+                          key={project.name}
+                          className="flex w-full items-center justify-between rounded-lg px-3 py-2 hover:bg-zinc-800 transition-colors"
+                        >
+                          <div className="flex items-center gap-3">
+                            <div className={`h-3 w-3 rounded-full ${project.color}`} />
+                            <span className="text-zinc-400">
+                              {project.name}
+                            </span>
+                          </div>
+
+                          <span className="text-sm text-zinc-600">
+                            {project.count}
+                          </span>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+              </SidebarContent>
+
+            <SidebarFooter>
+              <SidebarMenuButton>
+                <User className="h-4 w-4" />
+                <span>User</span>
+              </SidebarMenuButton>
+
+              <SidebarMenuButton>
+                <Mail className="h-4 w-4" />
+                <span>Email</span>
+              </SidebarMenuButton>
+            </SidebarFooter>
+          </Sidebar>
+
+          {/* Main Content Area */}
+            <SidebarInset>
+
+                <Header />
+
+                <main className="flex-1 p-8">
+                    {children}
+                </main>
+
+            </SidebarInset>
+
     </SidebarProvider>
   );
 }

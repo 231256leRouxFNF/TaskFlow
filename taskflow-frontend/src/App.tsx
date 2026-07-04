@@ -1,4 +1,4 @@
-import WorkspaceLayout from "./components/layout/Sidebar";
+import WorkspaceLayout from "./components/layout/AppLayout";
 
 function App() {
   return (
