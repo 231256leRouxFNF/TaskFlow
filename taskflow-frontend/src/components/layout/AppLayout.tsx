@@ -9,6 +9,7 @@ import {
 } from "../ui/sidebar";
 import { LayoutDashboard, CheckSquare, Mail, User, Zap } from "lucide-react";
 import Header from "./Header";
+import DashboardHeader from "./DashboardHeader";
 
 const projects = [
   { name: "Core API", color: "bg-indigo-500", count: 6 },
@@ -102,7 +103,13 @@ export default function WorkspaceLayout({
                 <Header />
 
                 <main className="flex-1 p-8">
-                    {children}
+
+                    <DashboardHeader />
+
+                    <div className="mt-8">
+                        {children}
+                    </div>
+
                 </main>
 
             </SidebarInset>
