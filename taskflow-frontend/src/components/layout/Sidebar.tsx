@@ -20,7 +20,7 @@ export default function WorkspaceLayout({
 
       {/* Sidebar Navigation Panel */}
       <Sidebar className="border-r border-zinc-800 bg-[#0F1117]">
-        <SidebarHeader className="border-b border-zinc-800 px-5 py-5">
+        <SidebarHeader className="border-b border-zinc-800 px-5 py-5 bg-[#0E1019]">
             <div className="flex items-center gap-3">
                 <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-indigo-600">
                     <Zap className="h-4 w-4 text-white"/>
@@ -32,22 +32,22 @@ export default function WorkspaceLayout({
             </div>
         </SidebarHeader>
         
-        <SidebarContent className="px-3 py-5 space-y-2">
-          <SidebarMenuButton isActive>
-            <LayoutDashboard className="h-4 w-4" />
-            <span>Dashboard</span>
+        <SidebarContent className="px-3 py-5 space-y-2 bg-[#0B0D15]">
+          <SidebarMenuButton isActive className="bg-[#6366F1]">
+            <LayoutDashboard className="h-4 w-4 " />
+            <span className="text-blue-400">Dashboard</span>
           </SidebarMenuButton>
           <SidebarMenuButton>
-            <CheckSquare className="h-4 w-4" />
-            <span>My Tasks</span>
+            <CheckSquare className="h-4 w-4 text-white" />
+            <span className="text-white">My Tasks</span>
           </SidebarMenuButton>
           <SidebarMenuButton>
-            <CheckSquare className="h-4 w-4" />
-            <span>My Tasks</span>
+            <CheckSquare className="h-4 w-4 text-white" />
+            <span className="text-white">My Tasks</span>
           </SidebarMenuButton>
           <SidebarMenuButton>
-            <CheckSquare className="h-4 w-4" />
-            <span>My Tasks</span>
+            <CheckSquare className="h-4 w-4 text-white" />
+            <span className="text-white">My Tasks</span>
           </SidebarMenuButton>
           </SidebarContent>
 
