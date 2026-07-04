@@ -1,13 +1,11 @@
-import WorkspaceLayout from "./components/layout/AppLayout";
+import AppLayout from "@/components/layout/AppLayout";
+import Dashboard from "@/pages/Dashboard";
 
 function App() {
   return (
-    <WorkspaceLayout>
-      <div className="text-white">
-
-
-      </div>
-    </WorkspaceLayout>
+    <AppLayout>
+      <Dashboard />
+    </AppLayout>
   );
 }
 
