@@ -1,0 +1,36 @@
+import { Card } from "@/components/ui/card";
+import type { Task } from "@/types/task";
+import PriorityBadge from "./PriorityBadge";
+
+interface TaskCardProps {
+  task: Task;
+}
+
+export default function TaskCard({ task }: TaskCardProps) {
+  return (
+    <Card className="rounded-xl border border-sidebar-border bg-card p-4 transition-colors hover:border-primary/30 hover:bg-accent/20">
+
+      {/* Task ID */}
+      <p className="text-xs text-muted-foreground">
+        {task.id}
+      </p>
+
+      {/* Title */}
+      <h3 className="mt-2 text-sm font-medium leading-6 text-foreground">
+        {task.title}
+      </h3>
+
+      {/* Footer */}
+      <div className="mt-5 flex items-center justify-between">
+
+        <PriorityBadge priority={task.priority} />
+
+        <div className="flex h-7 w-7 items-center justify-center rounded-full bg-indigo-500 text-xs font-semibold text-white">
+          {task.assignee}
+        </div>
+
+      </div>
+
+    </Card>
+  );
+}

@@ -10,6 +10,7 @@ import {
 import { LayoutDashboard, CheckSquare, Mail, User, Zap } from "lucide-react";
 import Header from "./Header";
 import DashboardHeader from "./DashboardHeader";
+import SprintBoard from "@/components/dashboard/SprintBoard";
 
 const projects = [
   { name: "Core API", color: "bg-indigo-500", count: 6 },
@@ -110,8 +111,10 @@ export default function WorkspaceLayout({
                         {children}
                     </div>
 
-                </main>
+                  <SprintBoard />
 
+                </main>
+              
             </SidebarInset>
 
     </SidebarProvider>

@@ -4,6 +4,7 @@ import { Search, Bell, Plus } from "lucide-react";
 
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
+import TaskDialog from "../dashboard/TaskDialog";
 
 export default function Header() {
   return (
@@ -35,10 +36,7 @@ export default function Header() {
             <Bell className="h-4 w-4" />
           </Button>
 
-          <Button>
-            <Plus className="mr-2 h-4 w-4" />
-            New Task
-          </Button>
+          <TaskDialog />
 
         </div>
 

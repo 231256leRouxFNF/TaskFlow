@@ -1,18 +1,18 @@
-{/* Fake Data */}
+import type { Task } from "@/types/task";
 
-export const tasks = [
-    {
-        id: "TFS-001",
-        title: "Implement JWT authentication middleware",
-        priority: "Critical",
-        assignee: "user1",
-        status: "Done",
-    },
-    {
-        id: "TFS-002",
-        title: "Build REST API endpoints",
-        priority: "High",
-        assignee: "user2",
-        status: "In Progress",
-    },
+export const tasks: Task[] = [
+  {
+    id: "TFS-001",
+    title: "Implement JWT authentication middleware",
+    priority: "Critical",
+    assignee: "AC",
+    status: "Done",
+  },
+  {
+    id: "TFS-002",
+    title: "Design Entity Framework Core schema",
+    priority: "High",
+    assignee: "MS",
+    status: "Review",
+  },
 ];
