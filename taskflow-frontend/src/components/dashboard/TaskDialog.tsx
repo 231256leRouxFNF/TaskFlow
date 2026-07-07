@@ -18,11 +18,16 @@ import {
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
+import type { Task } from "@/types/task";
 
-export default function TaskDialog() {
+interface TaskDialogProps {
+    addTask: (task: Task) => void;
+}
+
+export default function TaskDialog({ addTask }: TaskDialogProps) {
     const [open, setOpen] = useState(false);
 
-    const [task, setTask] = useState({
+    const [task, setTask] = useState<Omit<Task, "id">>({
         title: "",
         description: "",
         priority: "Medium",
@@ -56,6 +61,19 @@ export default function TaskDialog() {
             dueDate: "",
         });
         };
+
+    const newTask = {
+        id: crypto.randomUUID(),
+        title: task.title,
+        description: task.description,
+        priority: task.priority,
+        status: task.status,
+        assignee: task.assignee,
+        project: task.project,
+        dueDate: task.dueDate,
+        };
+
+        addTask(newTask);
   
     return (
             <Dialog

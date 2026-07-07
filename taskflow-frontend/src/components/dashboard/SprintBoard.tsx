@@ -1,7 +1,11 @@
 import SprintColumn from "./SprintColumn";
-import { tasks } from "../data/tasks";
+import type { Task } from "@/types/task";
 
-export default function SprintBoard() {
+interface SprintBoardProps {
+    tasks: Task[];
+}
+
+export default function SprintBoard({ tasks }: SprintBoardProps) {
   return (
     <section className="mt-8">
 

@@ -11,6 +11,8 @@ import { LayoutDashboard, CheckSquare, Mail, User, Zap } from "lucide-react";
 import Header from "./Header";
 import DashboardHeader from "./DashboardHeader";
 import SprintBoard from "@/components/dashboard/SprintBoard";
+import { useTasks } from "@/hooks/useTasks";
+import type { Task } from "@/types/task";
 
 const projects = [
   { name: "Core API", color: "bg-indigo-500", count: 6 },
@@ -19,11 +21,15 @@ const projects = [
   { name: "DevOps", color: "bg-emerald-500", count: 2 },
 ];
 
+
 export default function WorkspaceLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+
+  const { tasks, addTask } = useTasks();
+
   return (
     <SidebarProvider>
           {/* Sidebar Navigation Panel */}
@@ -101,7 +107,7 @@ export default function WorkspaceLayout({
           {/* Main Content Area */}
             <SidebarInset>
 
-                <Header />
+                <Header addTask={addTask} />
 
                 <main className="flex-1 p-8">
 
@@ -111,7 +117,7 @@ export default function WorkspaceLayout({
                         {children}
                     </div>
 
-                  <SprintBoard />
+                  <SprintBoard tasks={tasks} />
 
                 </main>
               

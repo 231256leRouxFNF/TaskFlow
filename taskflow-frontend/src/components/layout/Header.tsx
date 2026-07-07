@@ -1,12 +1,18 @@
 import { SidebarTrigger } from "../ui/sidebar";
 
-import { Search, Bell, Plus } from "lucide-react";
+import { Search, Bell, } from "lucide-react";
 
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import TaskDialog from "../dashboard/TaskDialog";
 
-export default function Header() {
+import type { Task } from "@/types/task";
+
+interface HeaderProps {
+    addTask: (task: Task) => void;
+}
+
+export default function Header({ addTask, }: HeaderProps) {
   return (
     <header className="border-b border-sidebar-border bg-background">
       <div className="flex h-14 items-center justify-between px-6">
@@ -36,7 +42,7 @@ export default function Header() {
             <Bell className="h-4 w-4" />
           </Button>
 
-          <TaskDialog />
+          <TaskDialog addTask={addTask} />
 
         </div>
 
