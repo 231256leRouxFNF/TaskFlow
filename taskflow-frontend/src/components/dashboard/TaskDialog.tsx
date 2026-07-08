@@ -39,7 +39,15 @@ export default function TaskDialog({ addTask }: TaskDialogProps) {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        console.log("Submitted Task Data:", task);
+
+        const newTask: Task = {
+            id: crypto.randomUUID(),
+            ...task,
+        };
+
+        addTask(newTask);
+
+        resetTask();
         setOpen(false);
     };
 
@@ -61,19 +69,6 @@ export default function TaskDialog({ addTask }: TaskDialogProps) {
             dueDate: "",
         });
         };
-
-    const newTask = {
-        id: crypto.randomUUID(),
-        title: task.title,
-        description: task.description,
-        priority: task.priority,
-        status: task.status,
-        assignee: task.assignee,
-        project: task.project,
-        dueDate: task.dueDate,
-        };
-
-        addTask(newTask);
   
     return (
             <Dialog
@@ -143,6 +138,7 @@ export default function TaskDialog({ addTask }: TaskDialogProps) {
                                 <SelectContent>
                                     <SelectItem value="To Do">To Do</SelectItem>
                                     <SelectItem value="In Progress">In Progress</SelectItem>
+                                    <SelectItem value="Review">Review</SelectItem>
                                     <SelectItem value="Done">Done</SelectItem>
                                 </SelectContent>
                             </Select>
