@@ -85,7 +85,7 @@ export default function TaskDialog({ addTask }: TaskDialogProps) {
                 <Button>+ New Task</Button>
             </DialogTrigger>
 
-            <DialogContent className="sm:max-w-xl max-h-[90vh] overflow-y-auto">
+            <DialogContent className="w-[95vw] max-w-xl max-h-[90vh] overflow-y-auto">
                 <DialogHeader>
                     <DialogTitle>Create New Task</DialogTitle>
                     <DialogDescription>

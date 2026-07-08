@@ -11,9 +11,9 @@ export default function TaskCard({ task }: TaskCardProps) {
     <Card className="rounded-xl border border-sidebar-border bg-card p-4 transition-colors hover:border-primary/30 hover:bg-accent/20">
 
       {/* Task ID */}
-      <p className="text-xs text-muted-foreground">
+      {/* <p className="text-xs text-muted-foreground">
         {task.id}
-      </p>
+      </p> */}
 
       {/* Title */}
       <h3 className="mt-2 text-sm font-medium leading-6 text-foreground">
@@ -26,7 +26,7 @@ export default function TaskCard({ task }: TaskCardProps) {
         <PriorityBadge priority={task.priority} />
 
         <div className="flex h-7 w-7 items-center justify-center rounded-full bg-indigo-500 text-xs font-semibold text-white">
-          {task.assignee}
+          {task.assignee ? task.assignee .split(" ") .map(name => name[0]) .join("") .slice(0, 2).toUpperCase(): "?"}
         </div>
 
       </div>
