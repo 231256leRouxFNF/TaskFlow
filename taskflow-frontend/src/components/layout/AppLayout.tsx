@@ -12,7 +12,7 @@ import Header from "./Header";
 import DashboardHeader from "./DashboardHeader";
 import SprintBoard from "@/components/dashboard/SprintBoard";
 import { useTasks } from "@/hooks/useTasks";
-import type { Task } from "@/types/task";
+// import type { Task } from "@/types/task";
 
 const projects = [
   { name: "Core API", color: "bg-indigo-500", count: 6 },
