@@ -1,14 +1,7 @@
-// import DashboardHeader from "../components/layout/DashboardHeader";
-import StatsSection from "../components/dashboard/StatsSection";
+import AppLayout from "@/components/layout/AppLayout";
 
-export default function Dashboard() {
-  return (
-    <>
-      {/* <DashboardHeader /> */}
-
-      <div className="mt-8">
-        <StatsSection />
-      </div>
-    </>
-  );
+function App() {
+    return <AppLayout />;
 }
+
+export default App;

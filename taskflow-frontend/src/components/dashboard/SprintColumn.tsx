@@ -2,17 +2,19 @@ import TaskCard from "./TaskCard";
 import type { Task } from "@/types/task";
 
 interface SprintColumnProps {
-  title: string;
-  tasks: Task[];
-  dotColor: string;
+    title: string;
+    dotColor: string;
+    tasks: Task[];
 
-  updateTask: (task: Task) => void;
-  deleteTask: (id: string) => void;
+    updateTask: (task: Task) => void;
+    deleteTask: (id: string) => void;
 }
 
 export default function SprintColumn({
   title,
   tasks,
+  updateTask,
+  deleteTask,
 }: SprintColumnProps) {
     const dotColor = {
   "To Do": "bg-slate-500",
@@ -46,6 +48,8 @@ export default function SprintColumn({
           <TaskCard
             key={task.id}
             task={task}
+            updateTask={updateTask}
+            deleteTask={deleteTask}
           />
         ))}
       </div>

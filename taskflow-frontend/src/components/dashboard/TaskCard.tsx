@@ -1,13 +1,28 @@
 import { Card } from "@/components/ui/card";
 import type { Task } from "@/types/task";
 import PriorityBadge from "./PriorityBadge";
+import { useState } from "react";
+import EditTaskDialog from "./EditTaskDialog";
 
 interface TaskCardProps {
   task: Task;
+  updateTask: (task: Task) => void;
+  deleteTask: (id: string) => void;
 }
 
-export default function TaskCard({ task }: TaskCardProps) {
-  return (
+export default function TaskCard({
+    task,
+    updateTask,
+    deleteTask,
+}: TaskCardProps) {
+
+    const [open, setOpen] = useState(false);
+
+    return (
+
+  <div 
+  onClick={() => setOpen(true)} className="cursor-pointer">
+
     <Card className="rounded-xl border border-sidebar-border bg-card p-4 transition-colors hover:border-primary/30 hover:bg-accent/20">
 
       {/* Task ID */}
@@ -32,5 +47,16 @@ export default function TaskCard({ task }: TaskCardProps) {
       </div>
 
     </Card>
+
+    <EditTaskDialog
+    open={open}
+    onOpenChange={setOpen}
+    task={task}
+    updateTask={updateTask}
+    deleteTask={deleteTask}
+    />
+
+  </div>
+
   );
 }

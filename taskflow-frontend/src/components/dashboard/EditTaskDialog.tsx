@@ -48,7 +48,7 @@ export default function EditTaskDialog({
         setEditedTask(task);
     }, [task]);
 
-    const saveTask = () => {
+    const handleSave = () => {
         updateTask(editedTask);
         onOpenChange(false);
     };
@@ -154,7 +154,7 @@ export default function EditTaskDialog({
                     </Button>
 
                     <Button
-                        onClick={saveTask}
+                        onClick={handleSave}
                     >
                         Save Changes
                     </Button>
