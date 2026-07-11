@@ -1,45 +1,64 @@
 import StatsCard from "./StatsCard";
+import type { Task } from "@/types/task";
 
 import {
-    Hash, 
+    Hash,
     CircleCheck,
     RefreshCcw,
-    CircleAlert
+    CircleAlert,
 } from "lucide-react";
 
-export default function StatsSection() {
+interface StatsSectionProps {
+    tasks: Task[];
+}
+
+export default function StatsSection({
+    tasks,
+}: StatsSectionProps) {
+
+    const totalTasks = tasks.length;
+
+    const completedTasks =
+        tasks.filter(task => task.status === "Done").length;
+
+    const inProgressTasks =
+        tasks.filter(task => task.status === "In Progress").length;
+
+    const reviewTasks =
+        tasks.filter(task => task.status === "Review").length;
+
     return (
         <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
 
             <StatsCard
                 title="Total Tasks"
-                value={12}
-                subtitle="+3 this week"
+                value={totalTasks}
+                subtitle="Across all projects"
                 icon={Hash}
             />
 
             <StatsCard
                 title="Completed"
-                value={2}
-                subtitle="17% completion rate"
+                value={completedTasks}
+                subtitle={`${totalTasks === 0 ? 0 : Math.round((completedTasks / totalTasks) * 100)}% completion`}
                 icon={CircleCheck}
                 iconColor="text-emerald-400"
             />
 
             <StatsCard
                 title="In Progress"
-                value={3}
-                subtitle="Across 3 projects"
+                value={inProgressTasks}
+                subtitle="Currently active"
                 icon={RefreshCcw}
                 iconColor="text-sky-400"
             />
 
             <StatsCard
-                title="Overdue"
-                value={1}
-                subtitle="Needs Attention"
+                title="Review"
+                value={reviewTasks}
+                subtitle="Awaiting approval"
                 icon={CircleAlert}
-                iconColor="text-red-400"
+                iconColor="text-amber-400"
             />
 
         </div>

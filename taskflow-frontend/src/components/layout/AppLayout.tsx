@@ -12,6 +12,7 @@ import Header from "./Header";
 import DashboardHeader from "./DashboardHeader";
 import SprintBoard from "@/components/dashboard/SprintBoard";
 import { useTasks } from "@/hooks/useTasks";
+import StatsSection from "../dashboard/StatsSection";
 // import type { Task } from "@/types/task";
 
 const projects = [
@@ -113,9 +114,7 @@ export default function WorkspaceLayout({
 
                     <DashboardHeader />
 
-                    <div className="mt-8">
-                        {children}
-                    </div>
+                    <StatsSection tasks={tasks} />
 
                   <SprintBoard tasks={tasks} />
 
