@@ -84,9 +84,9 @@ export default function TaskDialog({ addTask }: TaskDialogProps) {
                 setOpen(nextOpen);
             }}
             >            
-            <DialogTrigger>
-                <Button>+ New Task</Button>
-            </DialogTrigger>
+            {/* <DialogTrigger> */}
+                <Button onClick={() => setOpen(true)}>+ New Task</Button>
+            {/* </DialogTrigger> */}
 
             <DialogContent className="w-[95vw] max-w-xl max-h-[90vh] overflow-y-auto">
                 <DialogHeader>

@@ -61,7 +61,8 @@ export default function EditTaskDialog({
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
 
-            <DialogContent className="sm:max-w-xl">
+            <DialogContent className="sm:max-w-xl
+                onCLick={(e) => e.stopPropagation()}">
 
                 <DialogHeader>
                     <DialogTitle>Edit Task</DialogTitle>
