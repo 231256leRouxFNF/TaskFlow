@@ -41,7 +41,10 @@ export default function Header({ addTask, }: HeaderProps) {
             <Bell className="h-4 w-4" />
           </Button>
 
-          <TaskDialog addTask={addTask} />
+          <TaskDialog 
+              mode="create"
+              addTask={addTask}
+          />
 
         </div>
 

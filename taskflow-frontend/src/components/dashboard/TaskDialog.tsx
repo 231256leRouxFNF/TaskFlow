@@ -21,7 +21,10 @@ import { useState } from "react";
 import type { Task } from "@/types/task";
 
 interface TaskDialogProps {
+    mode: "create" | "edit";
     addTask: (task: Task) => void;
+    updateTask?: (task: Task) => void;
+    task?: Task;
 }
 
 export default function TaskDialog({ addTask }: TaskDialogProps) {

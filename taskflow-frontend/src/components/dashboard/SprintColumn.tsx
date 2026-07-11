@@ -5,6 +5,9 @@ interface SprintColumnProps {
   title: string;
   tasks: Task[];
   dotColor: string;
+
+  updateTask: (task: Task) => void;
+  deleteTask: (id: string) => void;
 }
 
 export default function SprintColumn({

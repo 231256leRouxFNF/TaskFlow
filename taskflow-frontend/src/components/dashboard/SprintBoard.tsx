@@ -3,9 +3,11 @@ import type { Task } from "@/types/task";
 
 interface SprintBoardProps {
     tasks: Task[];
+    updateTask: (task: Task) => void;
+    deleteTask: (id: string) => void;
 }
 
-export default function SprintBoard({ tasks }: SprintBoardProps) {
+export default function SprintBoard({ tasks, updateTask, deleteTask }: SprintBoardProps) {
   return (
     <section className="mt-8">
 
@@ -19,24 +21,32 @@ export default function SprintBoard({ tasks }: SprintBoardProps) {
             title="To Do"
             dotColor="bg-slate-500"
             tasks={tasks.filter(t => t.status === "To Do")}
+            updateTask={updateTask}
+            deleteTask={deleteTask}
         />
 
         <SprintColumn
             title="In Progress"
             dotColor="bg-sky-500"
             tasks={tasks.filter(t => t.status === "In Progress")}
+            updateTask={updateTask}
+            deleteTask={deleteTask}
         />
 
         <SprintColumn
             title="Review"
             dotColor="bg-amber-400"
             tasks={tasks.filter(t => t.status === "Review")}
+            updateTask={updateTask}
+            deleteTask={deleteTask}
         />
 
         <SprintColumn
             title="Done"
             dotColor="bg-emerald-500"
             tasks={tasks.filter(t => t.status === "Done")}
+            updateTask={updateTask}
+            deleteTask={deleteTask}
         />
 
       </div>

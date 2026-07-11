@@ -11,7 +11,7 @@ import { LayoutDashboard, CheckSquare, Mail, User, Zap } from "lucide-react";
 import Header from "./Header";
 import DashboardHeader from "./DashboardHeader";
 import SprintBoard from "@/components/dashboard/SprintBoard";
-import { useTasks } from "@/hooks/useTasks";
+import { useLocalStorage } from "../../hooks/useLocalStorage";
 import StatsSection from "../dashboard/StatsSection";
 // import type { Task } from "@/types/task";
 
@@ -23,13 +23,9 @@ const projects = [
 ];
 
 
-export default function WorkspaceLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function WorkspaceLayout() {
 
-  const { tasks, addTask } = useTasks();
+  const { tasks, addTask, updateTask, deleteTask,  } = useLocalStorage();
 
   return (
     <SidebarProvider>
@@ -116,7 +112,11 @@ export default function WorkspaceLayout({
 
                     <StatsSection tasks={tasks} />
 
-                  <SprintBoard tasks={tasks} />
+                  <SprintBoard 
+                      tasks={tasks}
+                      updateTask={updateTask}
+                      deleteTask={deleteTask}
+                  />
 
                 </main>
               
