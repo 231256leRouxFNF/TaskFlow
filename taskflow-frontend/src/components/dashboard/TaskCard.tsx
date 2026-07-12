@@ -1,62 +1,86 @@
 import { Card } from "@/components/ui/card";
 import type { Task } from "@/types/task";
 import PriorityBadge from "./PriorityBadge";
-import { useState } from "react";
 import EditTaskDialog from "./EditTaskDialog";
+
+import { useState } from "react";
+import { Draggable } from "@hello-pangea/dnd";
 
 interface TaskCardProps {
   task: Task;
+  index: number;
+
   updateTask: (task: Task) => void;
   deleteTask: (id: string) => void;
 }
 
 export default function TaskCard({
-    task,
-    updateTask,
-    deleteTask,
+  task,
+  index,
+  updateTask,
+  deleteTask,
 }: TaskCardProps) {
 
-    const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(false);
 
-    return (
+  return (
 
-  <div 
-  onClick={() => setOpen(true)} className="cursor-pointer">
+    <Draggable
+      draggableId={task.id}
+      index={index}
+    >
 
-    <Card className="rounded-xl border border-sidebar-border bg-card p-4 transition-colors hover:border-primary/30 hover:bg-accent/20">
+      {(provided) => (
 
-      {/* Task ID */}
-      {/* <p className="text-xs text-muted-foreground">
-        {task.id}
-      </p> */}
+        <div
+          ref={provided.innerRef}
+          {...provided.draggableProps}
+          {...provided.dragHandleProps}
+          onClick={() => setOpen(true)}
+          className="cursor-pointer"
+        >
 
-      {/* Title */}
-      <h3 className="mt-2 text-sm font-medium leading-6 text-foreground">
-        {task.title}
-      </h3>
+          <Card className="rounded-xl border border-sidebar-border bg-card p-4 transition-colors hover:border-primary/30 hover:bg-accent/20">
 
-      {/* Footer */}
-      <div className="mt-5 flex items-center justify-between">
+            <h3 className="mt-2 text-sm font-medium leading-6 text-foreground">
+              {task.title}
+            </h3>
 
-        <PriorityBadge priority={task.priority} />
+            <div className="mt-5 flex items-center justify-between">
 
-        <div className="flex h-7 w-7 items-center justify-center rounded-full bg-indigo-500 text-xs font-semibold text-white">
-          {task.assignee ? task.assignee .split(" ") .map(name => name[0]) .join("") .slice(0, 2).toUpperCase(): "?"}
+              <PriorityBadge priority={task.priority} />
+
+              <div className="flex h-7 w-7 items-center justify-center rounded-full bg-indigo-500 text-xs font-semibold text-white">
+
+                {task.assignee
+                  ? task.assignee
+                      .split(" ")
+                      .map((n) => n[0])
+                      .join("")
+                      .slice(0, 2)
+                      .toUpperCase()
+                  : "?"}
+
+              </div>
+
+            </div>
+
+          </Card>
+
+          <EditTaskDialog
+            open={open}
+            onOpenChange={setOpen}
+            task={task}
+            updateTask={updateTask}
+            deleteTask={deleteTask}
+          />
+
         </div>
 
-      </div>
+      )}
 
-    </Card>
-
-    <EditTaskDialog
-    open={open}
-    onOpenChange={setOpen}
-    task={task}
-    updateTask={updateTask}
-    deleteTask={deleteTask}
-    />
-
-  </div>
+    </Draggable>
 
   );
+
 }

@@ -46,6 +46,8 @@ export default function EditTaskDialog({
     const [showSaveConfirm, setShowSaveConfirm] = useState(false);
     const [showDiscardConfirm, setShowDiscardConfirm] = useState(false);
 
+
+
     useEffect(() => {
         setEditedTask(task);
     }, [task]);
@@ -59,7 +61,11 @@ export default function EditTaskDialog({
 
     const confirmSave = () => {
         updateTask(editedTask);
+
         setShowSaveConfirm(false);
+
+        setEditedTask(editedTask);//Resets the local copy of the task so that hasChanges becomes false
+
         onOpenChange(false);
     };
 
