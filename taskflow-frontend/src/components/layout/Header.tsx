@@ -10,9 +10,11 @@ import type { Task } from "@/types/task";
 
 interface HeaderProps {
     addTask: (task: Task) => void;
+    searchTerm: string;
+    setSearchTerm: (term: string) => void;
 }
 
-export default function Header({ addTask, }: HeaderProps) {
+export default function Header({ addTask, searchTerm, setSearchTerm }: HeaderProps) {
   return (
     <header className="border-b border-sidebar-border bg-background">
       <div className=" flex flex-col gap-4 p-4 md:h-14 md:flex-row md:items-center md:justify-between">
@@ -27,6 +29,8 @@ export default function Header({ addTask, }: HeaderProps) {
 
             <Input
               placeholder="Search tasks..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
               className="pl-10 bg-sidebar-bg text-sidebar-text"
             />
 

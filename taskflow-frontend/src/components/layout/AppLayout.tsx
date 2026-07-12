@@ -13,6 +13,7 @@ import DashboardHeader from "./DashboardHeader";
 import SprintBoard from "@/components/dashboard/SprintBoard";
 import { useLocalStorage } from "../../hooks/useLocalStorage";
 import StatsSection from "../dashboard/StatsSection";
+import { useState } from "react";
 // import type { Task } from "@/types/task";
 
 const projects = [
@@ -26,6 +27,25 @@ const projects = [
 export default function WorkspaceLayout() {
 
   const { tasks, addTask, updateTask, deleteTask,  } = useLocalStorage();
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const filteredTasks = tasks.filter((task) => {
+
+    const search = searchTerm.toLowerCase();
+
+    return (
+
+        task.title.toLowerCase().includes(search) ||
+
+        task.description.toLowerCase().includes(search) ||
+
+        task.project.toLowerCase().includes(search) ||
+
+        task.assignee.toLowerCase().includes(search)
+
+    );
+
+});
 
   return (
     <SidebarProvider>
@@ -104,16 +124,20 @@ export default function WorkspaceLayout() {
           {/* Main Content Area */}
             <SidebarInset>
 
-                <Header addTask={addTask} />
+                <Header 
+                    addTask={addTask}
+                    searchTerm={searchTerm}
+                    setSearchTerm={setSearchTerm}
+                />
 
                 <main className="flex-1 p-8">
 
                     <DashboardHeader />
 
-                    <StatsSection tasks={tasks} />
+                    <StatsSection tasks={filteredTasks} />
 
                   <SprintBoard 
-                      tasks={tasks}
+                      tasks={filteredTasks}
                       updateTask={updateTask}
                       deleteTask={deleteTask}
                   />

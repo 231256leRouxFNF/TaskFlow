@@ -38,14 +38,6 @@ export default function StatsSection({
             />
 
             <StatsCard
-                title="Completed"
-                value={completedTasks}
-                subtitle={`${totalTasks === 0 ? 0 : Math.round((completedTasks / totalTasks) * 100)}% completion`}
-                icon={CircleCheck}
-                iconColor="text-emerald-400"
-            />
-
-            <StatsCard
                 title="In Progress"
                 value={inProgressTasks}
                 subtitle="Currently active"
@@ -59,6 +51,14 @@ export default function StatsSection({
                 subtitle="Awaiting approval"
                 icon={CircleAlert}
                 iconColor="text-amber-400"
+            />
+
+            <StatsCard
+                title="Completed"
+                value={completedTasks}
+                subtitle={`${totalTasks === 0 ? 0 : Math.round((completedTasks / totalTasks) * 100)}% completion`}
+                icon={CircleCheck}
+                iconColor="text-emerald-400"
             />
 
         </div>

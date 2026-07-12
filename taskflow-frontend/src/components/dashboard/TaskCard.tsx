@@ -46,24 +46,52 @@ export default function TaskCard({
               {task.title}
             </h3>
 
-            <div className="mt-5 flex items-center justify-between">
+      <div className="space-y-4">
 
-              <PriorityBadge priority={task.priority} />
+          <div>
 
-              <div className="flex h-7 w-7 items-center justify-center rounded-full bg-indigo-500 text-xs font-semibold text-white">
+              <h3 className="text-base font-semibold">
+                  {task.title}
+              </h3>
 
-                {task.assignee
-                  ? task.assignee
-                      .split(" ")
-                      .map((n) => n[0])
-                      .join("")
-                      .slice(0, 2)
-                      .toUpperCase()
-                  : "?"}
+              <p className="mt-1 text-sm text-muted-foreground">
+                  {task.project}
+              </p>
 
+          </div>
+
+          <div className="flex items-center gap-2 text-xs text-muted-foreground">
+
+              <span>📅</span>
+
+              <span>{task.dueDate}</span>
+
+          </div>
+
+          <div className="flex items-center justify-between">
+
+          <PriorityBadge priority={task.priority} />
+
+              <div
+                  className="
+                      flex
+                      h-8
+                      w-8
+                      items-center
+                      justify-center
+                      rounded-full
+                      bg-primary
+                      text-xs
+                      font-semibold
+                      text-primary-foreground
+                  "
+              >
+                  {task.assignee.charAt(0).toUpperCase()}
               </div>
 
-            </div>
+          </div>
+
+      </div>
 
           </Card>
 
