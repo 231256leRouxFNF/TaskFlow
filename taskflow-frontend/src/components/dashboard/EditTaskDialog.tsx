@@ -43,13 +43,23 @@ export default function EditTaskDialog({
 }: EditTaskDialogProps) {
 
     const [editedTask, setEditedTask] = useState(task);
+    const [showSaveConfirm, setShowSaveConfirm] = useState(false);
+    const [showDiscardConfirm, setShowDiscardConfirm] = useState(false);
 
     useEffect(() => {
         setEditedTask(task);
     }, [task]);
 
+    const hasChanges =
+    JSON.stringify(task) !== JSON.stringify(editedTask);
+
     const handleSave = () => {
+        setShowSaveConfirm(true);
+    };
+
+    const confirmSave = () => {
         updateTask(editedTask);
+        setShowSaveConfirm(false);
         onOpenChange(false);
     };
 
@@ -59,10 +69,20 @@ export default function EditTaskDialog({
     };
 
     return (
-        <Dialog open={open} onOpenChange={onOpenChange}>
+        <Dialog
+            open={open}
+            onOpenChange={(nextOpen) => {
+                if (!nextOpen && hasChanges) {
+                    setShowDiscardConfirm(true);
+                    return;
+                }
+
+                onOpenChange(nextOpen);
+            }}
+        >
 
             <DialogContent className="sm:max-w-xl
-                onCLick={(e) => e.stopPropagation()}">
+                onClick={(e) => e.stopPropagation()}">
 
                 <DialogHeader>
                     <DialogTitle>Edit Task</DialogTitle>
@@ -163,6 +183,88 @@ export default function EditTaskDialog({
                 </DialogFooter>
 
             </DialogContent>
+
+                <Dialog
+                    open={showSaveConfirm}
+                    onOpenChange={setShowSaveConfirm}
+                >
+                    <DialogContent>
+
+                        <DialogHeader>
+
+                            <DialogTitle>
+                                Save Changes?
+                            </DialogTitle>
+
+                            <DialogDescription>
+                                Do you want to save these changes?
+                            </DialogDescription>
+
+                        </DialogHeader>
+
+                        <DialogFooter>
+
+                            <Button
+                                variant="outline"
+                                onClick={() => setShowSaveConfirm(false)}
+                            >
+                                Cancel
+                            </Button>
+
+                            <Button
+                                onClick={confirmSave}
+                            >
+                                Save
+                            </Button>
+
+                        </DialogFooter>
+
+                    </DialogContent>
+                </Dialog>
+
+                <Dialog
+                    open={showDiscardConfirm}
+                    onOpenChange={setShowDiscardConfirm}
+                >
+                    <DialogContent>
+
+                        <DialogHeader>
+
+                            <DialogTitle>
+                                Discard Changes?
+                            </DialogTitle>
+
+                            <DialogDescription>
+                                You have unsaved changes.
+                                Are you sure you want to discard them?
+                            </DialogDescription>
+
+                        </DialogHeader>
+
+                        <DialogFooter>
+
+                            <Button
+                                variant="outline"
+                                onClick={() => setShowDiscardConfirm(false)}
+                            >
+                                Continue Editing
+                            </Button>
+
+                            <Button
+                                variant="destructive"
+                                onClick={() => {
+                                    setEditedTask(task);
+                                    setShowDiscardConfirm(false);
+                                    onOpenChange(false);
+                                }}
+                            >
+                                Discard
+                            </Button>
+
+                        </DialogFooter>
+
+                    </DialogContent>
+                </Dialog>
 
         </Dialog>
     );
