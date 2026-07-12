@@ -45,7 +45,7 @@ export default function EditTaskDialog({
 
     const [editedTask, setEditedTask] = useState(task);
     const [showSaveConfirm, setShowSaveConfirm] = useState(false);
-    const [showDiscardConfirm, setShowDiscardConfirm] = useState(false);
+    const [/*showDiscardConfirm*/, setShowDiscardConfirm] = useState(false);
     const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
 
 
