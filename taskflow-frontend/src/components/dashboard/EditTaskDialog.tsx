@@ -23,6 +23,7 @@ import {
 } from "@/components/ui/select";
 
 import { Button } from "@/components/ui/button";
+import ConfirmDialog from "./ConfirnDialog";
 
 interface EditTaskDialogProps {
     open: boolean;
@@ -57,16 +58,15 @@ export default function EditTaskDialog({
     JSON.stringify(task) !== JSON.stringify(editedTask);
 
     const handleSave = () => {
-        setShowSaveConfirm(true);
+        updateTask(editedTask);
+        setEditedTask(editedTask);
+        onOpenChange(false);
     };
 
     const confirmSave = () => {
         updateTask(editedTask);
-
+        setEditedTask(editedTask);
         setShowSaveConfirm(false);
-
-        setEditedTask(editedTask);//Resets the local copy of the task so that hasChanges becomes false
-
         onOpenChange(false);
     };
 
@@ -230,128 +230,24 @@ export default function EditTaskDialog({
 
             </DialogContent>
 
-                <Dialog
-                    open={showSaveConfirm}
-                    onOpenChange={setShowSaveConfirm}
-                >
-                    <DialogContent>
-
-                        <DialogHeader>
-
-                            <DialogTitle>
-                                Save Changes?
-                            </DialogTitle>
-
-                            <DialogDescription>
-                                Do you want to save these changes?
-                            </DialogDescription>
-
-                        </DialogHeader>
-
-                        <DialogFooter className="flex justify-between">
-
-                            <Button
-                                variant="outline"
-                                onClick={() => setShowSaveConfirm(false)}
-                            >
-                                Cancel
-                            </Button>
-
-                            <Button
-                                onClick={confirmSave}
-                            >
-                                Save
-                            </Button>
-
-                        </DialogFooter>
-
-                    </DialogContent>
-                </Dialog>
-
-                <Dialog
-                    open={showDiscardConfirm}
-                    onOpenChange={setShowDiscardConfirm}
-                >
-                    <DialogContent>
-
-                        <DialogHeader>
-
-                            <DialogTitle>
-                                Discard Changes?
-                            </DialogTitle>
-
-                            <DialogDescription>
-                                You have unsaved changes.
-                                Are you sure you want to discard them?
-                            </DialogDescription>
-
-                        </DialogHeader>
-
-                        <DialogFooter className="flex justify-between">
-
-                            <Button
-                                variant="outline"
-                                onClick={() => setShowDiscardConfirm(false)}
-                            >
-                                Continue Editing
-                            </Button>
-
-                            <Button
-                                variant="destructive"
-                                onClick={() => {
-                                    setEditedTask(task);
-                                    setShowDiscardConfirm(false);
-                                    onOpenChange(false);
-                                }}
-                            >
-                                Discard
-                            </Button>
-
-                        </DialogFooter>
-
-                    </DialogContent>
-                </Dialog>
-
-                <Dialog
+                <ConfirmDialog
                     open={showDeleteConfirm}
-                    onOpenChange={setShowDeleteConfirm}
-                >
+                    title="Delete Task"
+                    description="This action cannot be undone."
+                    confirmText="Delete Task"
+                    confirmVariant="destructive"
+                    onConfirm={confirmDelete}
+                    onCancel={() => setShowDeleteConfirm(false)}
+                />
 
-                    <DialogContent>
-
-                        <DialogHeader>
-
-                            <DialogTitle>
-                                Delete Task?
-                            </DialogTitle>
-
-                            <DialogDescription>
-                                This action cannot be undone.
-                            </DialogDescription>
-
-                        </DialogHeader>
-
-                        <DialogFooter>
-
-                            <Button
-                                variant="outline"
-                                onClick={() => setShowDeleteConfirm(false)}
-                            >
-                                Cancel
-                            </Button>
-
-                            <Button
-                                variant="destructive"
-                                onClick={confirmDelete}
-                            >
-                                Delete
-                            </Button>
-
-                        </DialogFooter>
-
-                    </DialogContent>
-
-                </Dialog>
+                <ConfirmDialog
+                    open={showSaveConfirm}
+                    title="Save Changes?"
+                    description="Save the changes made to this task?"
+                    confirmText="Save Changes"
+                    onConfirm={confirmSave}
+                    onCancel={() => setShowSaveConfirm(false)}
+                />
 
         </Dialog>
     );
