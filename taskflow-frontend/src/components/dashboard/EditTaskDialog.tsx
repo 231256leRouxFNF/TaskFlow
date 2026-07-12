@@ -45,6 +45,7 @@ export default function EditTaskDialog({
     const [editedTask, setEditedTask] = useState(task);
     const [showSaveConfirm, setShowSaveConfirm] = useState(false);
     const [showDiscardConfirm, setShowDiscardConfirm] = useState(false);
+    const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
 
 
 
@@ -69,10 +70,12 @@ export default function EditTaskDialog({
         onOpenChange(false);
     };
 
-    const removeTask = () => {
+    const confirmDelete = () => {
         deleteTask(task.id);
+        setShowDeleteConfirm(false);
         onOpenChange(false);
     };
+
 
     return (
         <Dialog
@@ -87,8 +90,9 @@ export default function EditTaskDialog({
             }}
         >
 
-            <DialogContent className="sm:max-w-xl
-                onClick={(e) => e.stopPropagation()}">
+            <DialogContent className="sm:max-w-xl"
+                showCloseButton={false}
+                onClick={(e) => e.stopPropagation()}>
 
                 <DialogHeader>
                     <DialogTitle>Edit Task</DialogTitle>
@@ -171,22 +175,58 @@ export default function EditTaskDialog({
 
                 </div>
 
-                <DialogFooter className="justify-between">
+            <DialogFooter className="flex justify-between">
+
+                <Button
+                    variant="destructive"
+                    onClick={() => {
+
+                        if (
+                            window.confirm(
+                                "Are you sure you want to delete this task?\n\nThis action cannot be undone."
+                            )
+                        ) {
+
+                            deleteTask(task.id);
+                            onOpenChange(false);
+
+                        }
+
+                    }}
+                >
+                    Delete
+                </Button>
+
+                <div className="flex gap-2">
 
                     <Button
-                        variant="destructive"
-                        onClick={removeTask}
+                        variant="outline"
+                        onClick={() => onOpenChange(false)}
                     >
-                        Delete
+                        Cancel
                     </Button>
 
-                    <Button
-                        onClick={handleSave}
-                    >
-                        Save Changes
-                    </Button>
+                <Button
+                    onClick={() => {
 
-                </DialogFooter>
+                        if (
+                            window.confirm(
+                                "Save the changes made to this task?"
+                            )
+                        ) {
+
+                            handleSave();
+
+                        }
+
+                    }}
+                >
+                    Save Changes
+                </Button>
+
+                </div>
+
+            </DialogFooter>
 
             </DialogContent>
 
@@ -208,7 +248,7 @@ export default function EditTaskDialog({
 
                         </DialogHeader>
 
-                        <DialogFooter>
+                        <DialogFooter className="flex justify-between">
 
                             <Button
                                 variant="outline"
@@ -247,7 +287,7 @@ export default function EditTaskDialog({
 
                         </DialogHeader>
 
-                        <DialogFooter>
+                        <DialogFooter className="flex justify-between">
 
                             <Button
                                 variant="outline"
@@ -270,6 +310,47 @@ export default function EditTaskDialog({
                         </DialogFooter>
 
                     </DialogContent>
+                </Dialog>
+
+                <Dialog
+                    open={showDeleteConfirm}
+                    onOpenChange={setShowDeleteConfirm}
+                >
+
+                    <DialogContent>
+
+                        <DialogHeader>
+
+                            <DialogTitle>
+                                Delete Task?
+                            </DialogTitle>
+
+                            <DialogDescription>
+                                This action cannot be undone.
+                            </DialogDescription>
+
+                        </DialogHeader>
+
+                        <DialogFooter>
+
+                            <Button
+                                variant="outline"
+                                onClick={() => setShowDeleteConfirm(false)}
+                            >
+                                Cancel
+                            </Button>
+
+                            <Button
+                                variant="destructive"
+                                onClick={confirmDelete}
+                            >
+                                Delete
+                            </Button>
+
+                        </DialogFooter>
+
+                    </DialogContent>
+
                 </Dialog>
 
         </Dialog>
